@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gym Accessories Hub - Products</title>
+    <body>
+        <div class="auth-buttons">
+            <button id="login-btn">Sign In</button>
+            <button id="logout-btn" style="display: none;">Logout</button>
+            <button id="cart-btn">Cart (0)</button>
+        </div>
+    </body>
+    <style>
+
+        /* Same styles as original for products, cart, etc. */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #111;
+            color: #fff;
+            line-height: 1.6;
+        }
+        a {
+            text-decoration: none;
+            color: #fff;
+        }
+        button {
+            cursor: pointer;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: #ff4500;
+            color: #fff;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #e63946;
+        }
+
+        /* Header */
+        header {
+            background-color: #222;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ff4500;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+        nav ul li {
+            display: inline;
+        }
+        nav ul li a {
+            padding: 10px;
+            transition: color 0.3s;
+        }
+        nav ul li a:hover {
+            color: #ff4500;
+        }
+        .auth-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .auth-buttons button {
+            padding: 8px 15px;
+        }
+
+        /* Products Section */
+        .products {
+            padding: 50px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .products h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.5rem;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .product-card {
+            background-color: #333;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+            transition: transform 0.3s;
+        }   
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .product-card h3 {
+            padding: 15px;
+            font-size: 1.5rem;
+        }
+        .product-card p {
+            padding: 0 15px;
+            color: #ccc;
+        }
+        .product-card button {
+            margin: 15px;
+            width: calc(100% - 30px);
+        }
+
+        /* Cart Modal */
+        .cart-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .cart-content {
+            background-color: #222;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+        }
+        .cart-content h3 {
+            margin-bottom: 20px;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        /* Login Modal */
+        .login-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .login-content {
+            background-color: #222;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 400px;
+            width: 90%;
+        }
+        .login-content h3 {
+            margin-bottom: 20px;
+        }
+        .login-content input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+          footer {
+            background-color: #222;
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .product-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+    </style>
+    <section id="products" class="products">
+        <h2>Our Products</h2>
+        <div class="product-grid">
+            <div class="product-card">
+                <img src="tshirt.jpg" alt="Gym T-Shirt">
+                <h3>Gym T-Shirt</h3>
+                <p>Comfortable, breathable fabric for intense workouts.</p>
+                <button onclick="addToCart('Gym T-Shirt')">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <img src="trouser.jpg" alt="Trouser">
+                <h3>Trouser</h3>
+                <p>Flexible and durable gym pants.</p>
+                <button onclick="addToCart('Trouser')">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <img src="jacket.jpg" alt="Jacket">
+                <h3>Jacket</h3>
+                <p>Lightweight jacket for pre/post-workout.</p>
+                <button onclick="addToCart('Jacket')">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <img src="wristband.jpg" alt="Wrist Band">
+                <h3>Wrist Band</h3>
+                <p>Absorbs sweat and provides support.</p>
+                <button onclick="addToCart('Wrist Band')">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <img src="shoes.jpg" alt="Shoes">
+                <h3>Shoes</h3>
+                <p>High-performance gym shoes for grip and comfort.</p>
+                <button onclick="addToCart('Shoes')">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <img src="shocks.jpeg" alt="Socks">
+                <h3>Socks</h3>
+                <p>Moisture-wicking socks for all-day comfort.</p>
+                <button onclick="addToCart('Socks')">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <img src="protoein.jpg" alt="Protein">
+                <h3>Protein</h3>
+                <p>Premium protein powder for muscle recovery.</p>
+                <button onclick="addToCart('Protein')">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <img src="creatien.jpg" alt="Creatine">
+                <h3>Creatine</h3>
+                <p>Boost your strength and endurance.</p>
+                <button onclick="addToCart('Creatine')">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <img src="gymMachine.jpg" alt="Gym Machine">
+                <h3>Gym Machine</h3>
+                <p>Home gym equipment for full-body workouts.</p>
+                <button onclick="addToCart('Gym Machine')">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <img src="belt.webp" alt="Gym Belt">
+                <h3>Gym Belt</h3>
+                <p>Supportive belt for heavy lifting.</p>
+                <button onclick="addToCart('Gym Belt')">Add to Cart</button>
+            </div>
+        </div>
+    </section>
+</head>

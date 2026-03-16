@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gym Accessories Hub - Profile</title>
+    <style>
+        /* Base styles similar to original */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #111;
+            color: #fff;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        button {
+            cursor: pointer;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: #ff4500;
+            color: #fff;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #e63946;
+        }
+
+        /* Header */
+        header {
+            background-color: #222;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 50px;
+        }
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ff4500;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+        nav ul li a {
+            color: #fff;
+            padding: 10px;
+            transition: color 0.3s;
+        }
+        nav ul li a:hover {
+            color: #ff4500;
+        }
+
+        /* Profile Section */
+        .profile {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .profile img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+        .profile h2 {
+            margin-bottom: 20px;
+        }
+        .profile p {
+            margin-bottom: 10px;
+        }
+
+        /* Settings Modal */
+        .settings-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .settings-content {
+            background-color: #222;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 400px;
+            width: 90%;
+        }
+        .settings-content h3 {
+            margin-bottom: 20px;
+        }
+        .settings-content input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">Gym Accessories Hub</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <button id="logout-btn">Logout</button>
+    </header>
+
+    <section class="profile">
+        <h2>Your Profile</h2>
+        <img id="pic.jpg" src="" alt="Profile Photo">
+        <p><strong>Email:</strong> <span id="profile-email"></span></p>
+        <p><strong>Phone:</strong> <span id="profile-phone"></span></p>
+        <button onclick="openSettings()">Edit Settings</button>
+        <br><br>
+        <button onclick="window.location.href='products.html'">Go to Shop</button>
+    </section>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="settings-modal">
+        <div class="settings-content">
+            <h3>Edit Profile</h3>
+            <input type="email" id="edit-email" placeholder="Email">
+            <input type="tel" id="edit-phone" placeholder="Phone Number">
+            <input type="url" id="edit-photo" placeholder="Profile Photo URL">
+            <button onclick="saveSettings()">Save</button>
+            <button onclick="closeModal('settings-modal')">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Check login status
+        if (localStorage.getItem('loggedIn') !== 'true') {
+            window.location.href = 'index.html'; // Redirect if not logged in
+        }
+
+        // Load profile data
+        document.getElementById('profile-email').textContent = localStorage.getItem('userEmail') || '';
+        document.getElementById('profile-phone').textContent = localStorage.getItem('userPhone') || 'Not set';
+        document.getElementById('profile-photo').src = localStorage.getItem('userPhoto') || 'https://via.placeholder.com/150/333/fff?text=Profile+Photo';
+
+        // Logout
+        document.getElementById('logout-btn').addEventListener('click', () => {
+            localStorage.setItem('loggedIn', 'false');
+            window.location.href = 'index.html';
+        });
+
+        // Settings
+        function openSettings() {
+            document.getElementById('edit-email').value = localStorage.getItem('userEmail') || '';
+            document.getElementById('edit-phone').value = localStorage.getItem('userPhone') || '';
+            document.getElementById('edit-photo').value = localStorage.getItem('userPhoto') || '';
+            document.getElementById('settings-modal').style.display = 'flex';
+        }
+
+        function saveSettings() {
+            const email = document.getElementById('edit-email').value;
+            const phone = document.getElementById('edit-phone').value;
+            const photo = document.getElementById('edit-photo').value;
+            if (email) localStorage.setItem('userEmail', email);
+            localStorage.setItem('userPhone', phone);
+            if (photo) localStorage.setItem('userPhoto', photo);
+            closeModal('settings-modal');
+            location.reload(); // Reload to update display
+        }
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+    </script>
+</body>
+</html>
